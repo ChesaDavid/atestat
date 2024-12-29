@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background Layer -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+    <!-- Foreground Layer: Base of the cap -->
+    <item>
+        <vector
+            android:width="108dp"
+            android:height="108dp"
+            android:viewportWidth="108"
+            android:viewportHeight="108"
+            android:tint="@android:color/black">
+
+            <!-- Base of the cap -->
+            <path
+                android:pathData="M20,48 L54,38 L88,48 L54,58 Z"
+                android:fillColor="@android:color/black" />
+
+            <!-- Tassel string -->
+            <path
+                android:pathData="M34,48 L34,73"
+                android:strokeColor="@android:color/black"
+                android:strokeWidth="2" />
+
+            <!-- Tassel -->
+            <path
+                android:pathData="M53,49 A5,3 3 3,3 43,72"
+                android:fillColor="@android:color/black" />
+            <path
+                android:pathData="M45,50 L48,71"
+                android:strokeColor="@android:color/black"
+                android:strokeWidth="13" />
+            <path
+                android:pathData="M63 , 48 L61,71"
+                android:strokeColor="@android:color/black"
+                android:strokeWidth="13" />
+        </vector>
+    </item>
+
+</layer-list>
