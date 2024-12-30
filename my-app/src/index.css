@@ -23,7 +23,7 @@ body {
 }
 
 nav {
-  background: linear-gradient(to left, rgb(45, 86, 183), black);
+  background: linear-gradient(to left, blue, black);
   position: fixed; 
   width: 100%; 
   top: 0;
@@ -102,4 +102,9 @@ ul li a.active {
   color:red;
   border-radius: 10px;
   transition: 1s;
+}
+#logo-navbar{
+  height: 50px;
+  width: 50px;
+  
 }
