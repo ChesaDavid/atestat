@@ -64,7 +64,7 @@ function Home() {
             
             
             <footer style={styles.footer}>
-                <p>&copy; 2024 My Website. All rights reserved.</p>
+                <p>&copy; 2024 StudyIt. All rights reserved.</p>
             </footer>
         </>
     );
