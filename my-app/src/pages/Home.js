@@ -61,11 +61,6 @@ function Home() {
                     </p>
                 </section>
             </main>
-            
-            
-            <footer style={styles.footer}>
-                <p>&copy; 2024 StudyIt. All rights reserved.</p>
-            </footer>
         </>
     );
 }
