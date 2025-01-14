@@ -4,6 +4,11 @@ import React, { useState } from 'react';
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [ishoverd, setIsHoverdown] = useState('');
+
+    const handleHover = (section) => {
+        setIsHoverdown(ishoverd === section? '' : section);
+    };
 
     function verifyPassword(password) {
         if (password.length < 8) return false;
@@ -24,6 +29,7 @@ function Login() {
             alert(`Form submitted successfully! Username: ${username}`);
         }
     };
+
 
     const styles = {
         form: {
@@ -48,30 +54,47 @@ function Login() {
             marginBottom: '20px',
         },
         submit: {
-            width: '100%',
-            padding: '10px 20px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
+            backgroundColor: "lightblue",
+            color: "black",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            width: "290px",
+            marginTop: "10px",
+            borderRadius: "25px",
         },
+        hoverSubmit:{
+            backgroundColor: "darkblue",
+            color: "white",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            width: "290px",
+            marginTop: "10px",
+            borderRadius: "25px",
+        },
+        textLable: {
+            color: "gray",
+            fontSize: "17px",
+            marginTop: "5px",
+            
+        }
     };
 
     return (
         <form style={styles.form} onSubmit={handleSubmit}>
             <label style={styles.label}>
-                Username:
+            <p style={styles.textLable}>Email:</p> 
                 <input
                     style={styles.input}
                     type="text"
-                    name="username"
+                    name="Email"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
             </label>
             <label style={styles.label}>
-                Password:
+                <p style={styles.textLable}>Password:</p>
                 <input
                     style={styles.input}
                     type="password"
@@ -80,7 +103,10 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </label>
-            <button style={styles.submit} type="submit">
+            <button style={ishoverd !== 'submit' ? styles.submit : styles.hoverSubmit} type="submit"
+               onMouseEnter={() => handleHover("submit")}
+               onMouseLeave={() => handleHover("")}
+            >
                 Submit
             </button>
         </form>

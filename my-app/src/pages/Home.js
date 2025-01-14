@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import Calculator from "../assets/calculator.png";
 
+
 function Home() {
     const [visibleSection, setVisibleSection] = useState(""); 
-
+    const [hoverSection, setHoverSection] = useState(""); 
     const handleToggle = (section) => {
         setVisibleSection(visibleSection === section ? "" : section); 
     };
 
+    const handleHover = (section) => {
+        setHoverSection(hoverSection === section? "" : section);
+    };
     return (
         <>
             <header style={styles.header}>
@@ -17,7 +21,10 @@ function Home() {
             <main style={styles.main}>
                 {/* About Us */}
                 <section style={styles.section}>
-                    <h2 onClick={() => handleToggle("about")} style={styles.clickable}>
+                    <h2 onClick={() => handleToggle("about")} style={hoverSection !== "about" ? styles.clickable : styles.hover}  
+                        onMouseOver={()=> handleHover("about")}
+                        onMouseOut={()=> handleHover("about")}
+                        >
                         About Us
                     </h2>
                     <p style={visibleSection === "about" ? styles.visible : styles.press}>
@@ -33,7 +40,11 @@ function Home() {
                 </section>
                 {/* Our Services */}
                 <section style={styles.section}>
-                    <h2 onClick={() => handleToggle("services")} style={styles.clickable}>
+                    <h2 onClick={() => handleToggle("services")} 
+                        style={hoverSection !== "services" ? styles.clickable : styles.hover}
+                        onMouseOver={()=> handleHover("services")}
+                        onMouseOut={()=> handleHover("services")}
+                        >
                         Our Services
                     </h2>
                     <p style={visibleSection === "services" ? styles.visible : styles.press}>
@@ -44,7 +55,11 @@ function Home() {
                 </section>
                 {/* Contact Us */}
                 <section style={styles.section}>
-                    <h2 onClick={() => handleToggle("contact")} style={styles.clickable}>
+                    <h2 onClick={() => handleToggle("contact")} 
+                    style={hoverSection !== "contact" ? styles.clickable : styles.hover}
+                    onMouseOver={()=>handleHover("contact")}
+                    onMouseOut={()=>handleHover("contact")}
+                    >
                         Contact Us
                     </h2>
                     <p style={visibleSection === "contact" ? styles.visible : styles.press}>
@@ -54,7 +69,11 @@ function Home() {
                 </section>
                 {/* Free services */}
                 <section >
-                    <h2 onClick={()=>handleToggle("freeServices") } style={styles.clickable}>Free Services</h2>
+                    <h2 onClick={()=>handleToggle("freeServices") }
+                        style={hoverSection !== "freeServices" ? styles.clickable : styles.hover}
+                        onMouseOver={()=> handleHover("freeServices")}
+                        onMouseOut={()=> handleHover("freeServices")}
+                        >Free Services</h2>
                     <p style={visibleSection==="freeServices" ? styles.visible : styles.press}>
                     <a href="calculator"><img src={Calculator} alt="Calculator" style={{ width: "200px", margin: "0 auto" }} /></a>
                      
@@ -109,8 +128,9 @@ const styles = {
     },
     clickable: {
         cursor: "pointer",
-        color: "#007bff",
-        textDecoration: "underline",
+        color: "white",
+        textDecoration: "none",
+        textAlign: "center",
     },
     press: {
         display: "none",
@@ -119,7 +139,20 @@ const styles = {
         display: "block",
         marginTop: "10px",
         lineHeight: "1.6",
+        color: "white",
     },
+    hover:{
+        backgroundColor: "blue",
+        color: "white",
+        cursor: "pointer",
+        transition: "background-color 0.9s",
+        textAlign: "center",
+        padding: "10px",
+        marginTop: "10px",
+        lineHeight: "1.6",
+        color: "white",
+        borderRadius: "20px",
+    }
 };
 
 export default Home;
