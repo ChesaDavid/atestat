@@ -7,6 +7,7 @@ import Calculator from './pages/Calculator';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Resources from './pages/Resources';
 function App() {
   return (
       <Router>
@@ -16,6 +17,7 @@ function App() {
           <Route path='/calculator' element={<Calculator/>} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/resources' element={<Resources />} />
         </Routes>
         <Footer />
       </Router>
