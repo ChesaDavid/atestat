@@ -8,6 +8,8 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Resources from './pages/Resources';
+import Buttonup from './components/Buttonup';
+
 function App() {
   return (
       <Router>
@@ -19,6 +21,7 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/resources' element={<Resources />} />
         </Routes>
+        <Buttonup />
         <Footer />
       </Router>
   );

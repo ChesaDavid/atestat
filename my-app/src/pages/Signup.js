@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../assets/logo.png";
 
 function Signup() {
   // Creating state variables for user data
@@ -61,13 +62,15 @@ function Signup() {
       borderRadius: "25px"
     },
     form: {
-      margin: "50px auto",
-      padding: "20px",
-      width: "400px",
-      background: "#fff",
-      borderRadius: "10px",
-      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-      marginTop: "210px"
+      display: 'flex',
+      margin: '50px auto',
+      padding: '20px',
+      width: '400px',
+      background: '#fff',
+      borderRadius: '10px',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      alignItems: 'center',
+      flexDirection: 'column',
     },
     label: {
       display: "block",
@@ -113,6 +116,7 @@ function Signup() {
       <h1 style={styles.title}>Sign Up</h1>
       {user.errorMessage && <p>{user.errorMessage}</p>}
       <form onSubmit={handleSubmit} style={styles.form}>
+       <img src={require('../assets/logo.png')} alt="Logo" />
         <label style={styles.label}>
           Name:
           <input

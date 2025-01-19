@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import "../assets/logo.png";
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -33,13 +33,16 @@ function Login() {
 
     const styles = {
         form: {
+            display: 'flex',
             margin: '50px auto',
             padding: '20px',
             width: '400px',
             background: '#fff',
             borderRadius: '10px',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            marginTop: '210px',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop:  '82px'
         },
         label: {
             display: 'block',
@@ -78,27 +81,53 @@ function Login() {
             fontSize: "17px",
             marginTop: "5px",
             
+        },
+        forgotPassword: {
+            color: 'blue',
+            cursor: 'pointer',
+            marginTop: '10px',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        login: {
+            marginTop: '10px',
+            color: 'blue',
+            cursor: 'pointer',
+        },
+        dispalyit: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '10px',
+            color: 'blue',
+            cursor: 'pointer',
         }
     };
 
     return (
+        <>
+        <div style={styles.dispalyit}>
+        
         <form style={styles.form} onSubmit={handleSubmit}>
+        <img src={require('../assets/logo.png')} alt="Logo" />
             <label style={styles.label}>
-            <p style={styles.textLable}>Email:</p> 
+            <p style={styles.textLable}></p> 
                 <input
                     style={styles.input}
                     type="text"
                     name="Email"
+                    placeholder='Email..'
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
             </label>
             <label style={styles.label}>
-                <p style={styles.textLable}>Password:</p>
+                <p style={styles.textLable}></p>
                 <input
                     style={styles.input}
                     type="password"
                     name="password"
+                    placeholder='Password..'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
@@ -109,7 +138,14 @@ function Login() {
             >
                 Submit
             </button>
+            <br></br>
+            <p style={styles.forgotPassword} >Forgot the password</p>
+            <p style={styles.login}>Or don't have an account Login</p>
         </form>
+        </div>
+       
+        </>
+        
     );
 }
 
