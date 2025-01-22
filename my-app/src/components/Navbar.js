@@ -34,8 +34,10 @@ function Navbar() {
                 <li><Link to="/">Home</Link></li>
                 {isAuthenticated && <li><Link to="/fav">Favorites</Link></li>}
                 <li><Link to="/resources">Resources</Link></li>
-                <li><Link to="/login">LogIn</Link></li>
-                <li><Link to="/signup">SignUp</Link></li>
+                {isAuthenticated && <li><Link to="/logout">LogOut</Link></li>}
+                {!isAuthenticated && <li><Link to="/login">LogIn</Link></li>}
+                {!isAuthenticated && <li><Link to="/signup">SignUp</Link></li>}
+                
             </ul>
         </nav>
     );

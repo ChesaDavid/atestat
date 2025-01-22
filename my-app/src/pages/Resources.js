@@ -29,7 +29,7 @@ function Resources(){
             fontWeight: 'bold',
             marginBottom: '10px',
             padding: '10px',
-            backgroundColor: '#ddd',
+            backgroundColor: 'white',
             borderRadius: '5px',
             color: '#333',
             border: 'none',

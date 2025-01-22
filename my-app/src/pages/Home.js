@@ -21,9 +21,10 @@ function Home() {
             <main style={styles.main}>
                 {/* About Us */}
                 <section style={styles.section}>
-                    <h2 onClick={() => handleToggle("about")} style={hoverSection !== "about" ? styles.clickable : styles.hover}  
-                        onMouseOver={()=> handleHover("about")}
-                        onMouseOut={()=> handleHover("about")}
+                    <h2 onClick={() => handleToggle("about")}
+                        style={visibleSection === "about" || hoverSection === "about" ? styles.hover : styles.clickable}
+                        onMouseOver={() => handleHover("about")}
+                        onMouseOut={() => handleHover("about")}
                         >
                         About Us
                     </h2>
@@ -40,10 +41,10 @@ function Home() {
                 </section>
                 {/* Our Services */}
                 <section style={styles.section}>
-                    <h2 onClick={() => handleToggle("services")} 
-                        style={hoverSection !== "services" ? styles.clickable : styles.hover}
-                        onMouseOver={()=> handleHover("services")}
-                        onMouseOut={()=> handleHover("services")}
+                    <h2 onClick={() => handleToggle("services")}
+                        style={visibleSection === "services" || hoverSection === "services" ? styles.hover : styles.clickable}
+                        onMouseOver={() => handleHover("services")}
+                        onMouseOut={() => handleHover("services")}
                         >
                         Our Services
                     </h2>
@@ -55,10 +56,10 @@ function Home() {
                 </section>
                 {/* Contact Us */}
                 <section style={styles.section}>
-                    <h2 onClick={() => handleToggle("contact")} 
-                    style={hoverSection !== "contact" ? styles.clickable : styles.hover}
-                    onMouseOver={()=>handleHover("contact")}
-                    onMouseOut={()=>handleHover("contact")}
+                    <h2  onClick={() => handleToggle("contact")}
+                        style={visibleSection === "contact" || hoverSection === "contact" ? styles.hover : styles.clickable}
+                        onMouseOver={() => handleHover("contact")}
+                        onMouseOut={() => handleHover("contact")}
                     >
                         Contact Us
                     </h2>
@@ -69,10 +70,10 @@ function Home() {
                 </section>
                 {/* Free services */}
                 <section >
-                    <h2 onClick={()=>handleToggle("freeServices") }
-                        style={hoverSection !== "freeServices" ? styles.clickable : styles.hover}
-                        onMouseOver={()=> handleHover("freeServices")}
-                        onMouseOut={()=> handleHover("freeServices")}
+                    <h2 onClick={() => handleToggle("freeServices")}
+                        style={visibleSection === "freeServices" || hoverSection === "freeServices" ? styles.hover : styles.clickable}
+                        onMouseOver={() => handleHover("freeServices")}
+                        onMouseOut={() => handleHover("freeServices")}
                         >Free Services</h2>
                     <p style={visibleSection==="freeServices" ? styles.visible : styles.press}>
                     <a href="calculator"><img src={Calculator} alt="Calculator" style={{ width: "200px", margin: "0 auto" }} /></a>
