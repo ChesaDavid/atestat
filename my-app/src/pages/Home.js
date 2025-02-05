@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Calculator from "../assets/calculator.png";
-
+import { displayName } from "../firebase";
 
 function Home() {
     const [visibleSection, setVisibleSection] = useState(""); 
@@ -74,7 +74,7 @@ function Home() {
                         style={visibleSection === "freeServices" || hoverSection === "freeServices" ? styles.hover : styles.clickable}
                         onMouseOver={() => handleHover("freeServices")}
                         onMouseOut={() => handleHover("freeServices")}
-                        >Free Services</h2>
+                        >Services</h2>
                     <p style={visibleSection==="freeServices" ? styles.visible : styles.press}>
                     <a href="calculator"><img src={Calculator} alt="Calculator" style={{ width: "200px", margin: "0 auto" }} /></a>
                      

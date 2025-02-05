@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Resources from './pages/Resources';
 import Buttonup from './components/Buttonup';
+import Course from './pages/Course';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Route path='/calculator' element={<Calculator/>} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/resources' element={<Resources />} />
+          <Route path='/resources' element={<Resources />} />       
+          <Route path='/course' element={<Course />}></Route>
         </Routes>
         <Buttonup />
         <Footer />

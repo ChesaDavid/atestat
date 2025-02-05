@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import '../index.css';
 import Logo from "../assets/logo.png";
-
+import { displayName } from "../firebase";
 function Navbar() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Mock authentication state
+    const isAuthenticated = (displayName === null) ? false : true; // Mock authentication state
 
     const styles = {
         searchBar: {
@@ -19,11 +19,25 @@ function Navbar() {
                 boxShadow: "0 0 10px rgba(0,0,0,0.5)",
             },
         },
+        logoundname:{
+            color: "white",
+            display:"flex",
+            gap:"10px",
+            alignItems: "center"
+        },
+        displayNameStyle:{
+            fontSize: "20px",
+            fontWeight: "bold"
+        }
     };
-
+    console.log(displayName)
     return (
         <nav>
-            <img src={Logo} alt="Logo" id="logo-navbar" />
+            <div style={styles.logoundname}>
+                <img src={Logo} alt="Logo" id="logo-navbar" />
+                {isAuthenticated && <p style={styles.displayNameStyle}>{displayName}</p>}
+            </div>
+            
             <input
                 type="text"
                 id="search"

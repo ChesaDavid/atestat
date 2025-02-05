@@ -1,6 +1,20 @@
 import React from 'react';
 import PhpLogo from "../assets/ComputerScience/PHP_Logo.png";
 import JSLogo from "../assets/ComputerScience/JSimg.webp";
+import AndroidStudioLogo from "../assets/ComputerScience/android-studio.png";
+import CLogo from "../assets/ComputerScience/c.png";
+import CPPLogo from "../assets/ComputerScience/cpp.png";
+import FlutterLogo from "../assets/ComputerScience/flutter.png";
+import GitHubLogo from "../assets/ComputerScience/github.png";
+import JavaLogo from "../assets/ComputerScience/java-logo.png";
+import LuaLogo from "../assets/ComputerScience/lua.png";
+import NextLogo from "../assets/ComputerScience/next.png";
+import PythonLogo from "../assets/ComputerScience/python.png";
+import ReactLogo from "../assets/ComputerScience/react.png";
+import TailwindLogo from "../assets/ComputerScience/tailwind.png";
+import { Link } from 'react-router-dom';
+
+
 function Resources() {
     const styles = {
         info: {
@@ -50,7 +64,7 @@ function Resources() {
         },
         materialCard: {
             flex: '0 0 auto',
-            width: '150px',
+            width: '300px',
             padding: '10px',
             border: '1px solid #ddd',
             borderRadius: '5px',
@@ -71,13 +85,12 @@ function Resources() {
             textAlign:'center'
         },
         logo : {
-            width: "100px",
-            height: "80px"
+            width: "290px",
+            height: "160px"
         }
     };
 
     const subjects = [
-        { title: "Informatics", id: "informatics" },
         { title: "Computer Science", id: "computer_science" },
         { title: "Mathematics", id: "mathematics" },
         { title: "Physics", id: "physics" },
@@ -88,24 +101,25 @@ function Resources() {
         { title: "Geography", id: "geography" },
         { title: "History", id: "history" },
         { title: "Economics", id: "economics" },
-        { title: "Literature", id: "literature" },
-        { title: "Sports", id: "sports" },
-        { title: "Business", id: "business" },
-        { title: "Music", id: "music" },
+
     ];
 
     const materials = [
-        [], // Informatics
-        [
-            {
-                logo: PhpLogo,
-                title: "PHP Course",
-            },
-            {
-                logo: JSLogo,
-                title: "JavaScript Course",
-            },
-        ], // Computer Science
+        [ // Computer Science
+            { logo: PhpLogo, title: "PHP Course" },
+            { logo: JSLogo, title: "JavaScript Course" },
+            { logo: AndroidStudioLogo, title: "Android Studio Course" },
+            { logo: CLogo, title: "C Course" },
+            { logo: CPPLogo, title: "C++ Course" },
+            { logo: FlutterLogo, title: "Flutter Course" },
+            { logo: GitHubLogo, title: "GitHub Guide" },
+            { logo: JavaLogo, title: "Java Course" },
+            { logo: LuaLogo, title: "Lua Course" },
+            { logo: NextLogo, title: "Next.js Course" },
+            { logo: PythonLogo, title: "Python Course" },
+            { logo: ReactLogo, title: "React Course" },
+            { logo: TailwindLogo, title: "Tailwind CSS Guide" },
+        ], 
         [], // Mathematics
     ];
 
@@ -113,18 +127,24 @@ function Resources() {
         const container = document.getElementById(id);
         if (container) {
             container.scrollBy({
-                left: direction === 'left' ? -200 : 200,
+                left: direction === 'left' ? -300 : 300,
                 behavior: 'smooth',
             });
         }
     };
-
+    function Show(index,matIndex){
+        console.log(JSON.stringify('selectedCourse'))
+       
+    }
+    function navigateTo(url){
+        window.location.replace(url);
+    }
     return (
         <div>
             {subjects.map((subject, index) => (
                 <div
                     key={index}
-                    style={subject.id === "informatics" ? styles.info : styles.infoTwo}
+                    style={subject.id === "computer_science" ? styles.info : styles.infoTwo}
                     id={subject.id}
                 >
                     <p style={styles.infoTitle}>{subject.title}</p>
@@ -141,7 +161,12 @@ function Resources() {
                                 style={styles.materialsContainer}
                             >
                                 {materials[index].map((material, matIndex) => (
-                                    <div key={matIndex} style={styles.materialCard}>
+                                    <div key={matIndex} style={styles.materialCard}
+                                        onClick={()=>{
+                                            localStorage.setItem('selectedCourse',materials[index][matIndex]);
+                                            navigateTo('http://localhost:3001/course')
+                                        }}
+                                    >
                                         <img
                                             src={material.logo}
                                             alt={material.title}

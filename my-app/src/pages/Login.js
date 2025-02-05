@@ -1,48 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import "../assets/logo.png";
-
 function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [ishoverd, setIsHoverdown] = useState('');
+    const [user, setUser] = useState({
+        email: "",
+        password: "",
+        errorMessage: ""
+      });
+      const [ishoverd, setIsHoverdown] = useState('');
 
     const handleHover = (section) => {
         setIsHoverdown(ishoverd === section? '' : section);
     };
-
-    function verifyPassword(password) {
-        if (password.length < 8) return false;
-        if (!/[a-z]/.test(password)) return false;
-        if (!/[A-Z]/.test(password)) return false;
-        if (!/[0-9]/.test(password)) return false;
-        if (!/[!@#$%^&*()]/.test(password)) return false;
-        return true;
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!verifyPassword(password)) {
-            alert(
-                "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character."
-            );
-        } else {
-            alert(`Form submitted successfully! Username: ${username}`);
+    
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUser((prevUser) => ({
+          ...prevUser,
+          [name]: value
+        }));
+      };
+    
+      const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+          await signInWithEmailAndPassword(auth, user.email, user.password);
+          alert("Login successful!");
+          window.location.replace('http://localhost:3001/')
+        } catch (error) {
+          setUser((prevUser) => ({ ...prevUser, errorMessage: error.message }));
         }
-    };
-
+      };
 
     const styles = {
         form: {
             display: 'flex',
             margin: '50px auto',
             padding: '20px',
-            width: '400px',
+            width: '800px',
             background: '#fff',
             borderRadius: '10px',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             alignItems: 'center',
-            flexDirection: 'column',
-            marginTop:  '82px'
+            flexDirection: 'row',
+            marginTop:  '12%'
         },
         label: {
             display: 'block',
@@ -110,37 +112,32 @@ function Login() {
         
         <form style={styles.form} onSubmit={handleSubmit}>
         <img src={require('../assets/logo.png')} alt="Logo" />
-            <label style={styles.label}>
+        <div>
+        <label style={styles.label}>
             <p style={styles.textLable}></p> 
                 <input
                     style={styles.input}
-                    type="text"
-                    name="Email"
-                    placeholder='Email..'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    type="email" name="email" placeholder="Email" value={user.email} onChange={handleChange} required
                 />
             </label>
             <label style={styles.label}>
                 <p style={styles.textLable}></p>
                 <input
                     style={styles.input}
-                    type="password"
-                    name="password"
-                    placeholder='Password..'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    type="password" name="password" placeholder="Password" value={user.password} onChange={handleChange} required
                 />
             </label>
             <button style={ishoverd !== 'submit' ? styles.submit : styles.hoverSubmit} type="submit"
                onMouseEnter={() => handleHover("submit")}
                onMouseLeave={() => handleHover("")}
+               onClick={handleSubmit}
             >
                 Submit
             </button>
             <br></br>
             <p style={styles.forgotPassword} >Forgot the password</p>
             <p style={styles.login}>Or don't have an account Login</p>
+        </div>
         </form>
         </div>
        
