@@ -13,7 +13,7 @@ import PythonLogo from "../assets/ComputerScience/python.png";
 import ReactLogo from "../assets/ComputerScience/react.png";
 import TailwindLogo from "../assets/ComputerScience/tailwind.png";
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 function Resources() {
     const styles = {
@@ -90,6 +90,10 @@ function Resources() {
         }
     };
 
+    const navigate = useNavigate();
+    function goToCourse(){
+        navigate('/course');
+    }
     const subjects = [
         { title: "Computer Science", id: "computer_science" },
         { title: "Mathematics", id: "mathematics" },
@@ -164,7 +168,7 @@ function Resources() {
                                     <div key={matIndex} style={styles.materialCard}
                                         onClick={()=>{
                                             localStorage.setItem('selectedCourse',materials[index][matIndex]);
-                                            navigateTo('http://localhost:3001/course')
+                                            goToCourse();
                                         }}
                                     >
                                         <img
