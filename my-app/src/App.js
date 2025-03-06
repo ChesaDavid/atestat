@@ -10,6 +10,11 @@ import Signup from './pages/Signup';
 import Resources from './pages/Resources';
 import Buttonup from './components/Buttonup';
 import Course from './pages/Course';
+import Logout from './pages/Logout';
+import Alert from './components/Alert';
+import Todo from './pages/Todo';
+import Contabil from './pages/Contabil';
+import Favorites from './pages/Favorites';
 
 function App() {
   return (
@@ -22,9 +27,13 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/resources' element={<Resources />} />       
           <Route path='/course' element={<Course />}></Route>
+          <Route path='/logout' element={<Logout/>}></Route>
+          <Route path='/todo' element={<Todo/>}></Route>
+          <Route path='/contabil' element={<Contabil/>}></Route>
+          <Route path='/fav' element={<Favorites/>}></Route>
         </Routes>
         <Buttonup />
-        <Footer />
+        <Footer className=""/>
       </Router>
   );
 }
