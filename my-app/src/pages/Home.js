@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Calculator from "../assets/calculator.png";
 import { displayName } from "../firebase";
+import Account from "../assets/accountLogo.jpg";
 
 function Home() {
     const [visibleSection, setVisibleSection] = useState(""); 
@@ -12,13 +13,14 @@ function Home() {
     const handleHover = (section) => {
         setHoverSection(hoverSection === section? "" : section);
     };
+    console.log(displayName);
     return (
         <>
             <header style={styles.header}>
                 <h1 style={styles.title}>Welcome to StudyIt!</h1>
                 <p style={styles.subtitle}>Where everyone can become a master at anything.</p>
             </header>
-            <main style={styles.main}>
+            <main style={styles.main} className="h-screen">
                 {/* About Us */}
                 <section style={styles.section}>
                     <h2 onClick={() => handleToggle("about")}
@@ -46,7 +48,7 @@ function Home() {
                         onMouseOver={() => handleHover("services")}
                         onMouseOut={() => handleHover("services")}
                         >
-                        Our Services
+                       Apps
                     </h2>
                     <p style={visibleSection === "services" ? styles.visible : styles.press}>
                         We offer educational resources and services, everything just at a click's notice.
@@ -76,10 +78,13 @@ function Home() {
                         onMouseOut={() => handleHover("freeServices")}
                         >Services</h2>
                     <p style={visibleSection==="freeServices" ? styles.visible : styles.press}>
-                    <a href="calculator"><img src={Calculator} alt="Calculator" style={{ width: "200px", margin: "0 auto" }} /></a>
-                     
+                    <div className="flex gap-3">
+                        <a href="calculator"><img src={Calculator} alt="Calculator" style={{ width: "200px", margin: "0 auto" }} /></a>
+                        <a href="contabil"><img src={Account} alt="Account" style={{width: "200px", margin: "0 auto"}}/></a>
+                    </div>
                     </p>
                 </section>
+                
             </main>
         </>
     );

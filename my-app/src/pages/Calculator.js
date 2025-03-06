@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { displayName } from "../firebase";
 
 function Calculator() {
     const [screen, setScreen] = useState('');
@@ -32,7 +33,7 @@ function Calculator() {
             cursor: 'pointer',
         },
     };
-
+    console.log(displayName);
     function handleButtonClick(value) {
         if (value === 'AC') {
             setScreen('');

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -23,6 +27,7 @@ body {
   background-color: rgb(1, 1, 51);
 }
 
+/* Navbar */
 nav {
   background: linear-gradient(to left, blue, black);
   position: fixed; 
@@ -30,12 +35,20 @@ nav {
   top: 0;
   left: 0;
   display: flex;
-  text-align: center;
+  align-items: center;
   justify-content: space-between;
-  padding: 1rem;
-  text-align: right; 
+  padding: 1rem 2rem;
   z-index: 1000; 
 }
+
+/* Logo */
+#logo-navbar {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+
+/* Navbar list */
 nav ul {
   list-style: none;
   display: flex;
@@ -51,7 +64,7 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: #fff; 
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 10px 15px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
@@ -63,49 +76,72 @@ nav ul li a:hover {
   text-decoration: none;
 }
 
-
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    align-items: flex-end; 
-  }
-
-  nav ul li {
-    margin: 10px 0;
-  }
-}
-.App-logo-nav {
-  width: 50px;
-  height: 50px;
-  transition: transform 0.6s; 
-}
-.logo-flip:hover {
-  transform: rotateY(180deg); 
-} 
-ul li a.active {
+/* Active link */
+ul li a.active:not(#LogOutButton) {
   color: #070808;
   font-weight: bold;
   border-bottom: 2px solid #0d1116; 
 }
-#logout{
+
+/* Logout Button */
+#logout {
   background-color: red;
   padding: 10px;
   font-size: 18px;
   font-weight: bold;
   border-radius: 10px;
+  transition: all 0.3s ease-in-out;
 }
-#logout:hover{
-  background-color:rgb(45, 86, 183);
-  padding: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  border: red solid 2px;
-  color:red;
-  border-radius: 10px;
-  transition: 1s;
+
+#logout:hover {
+  background-color: rgb(45, 86, 183);
+  border: 2px solid red;
+  color: red;
 }
-#logo-navbar{
-  height: 50px;
-  width: 50px;
-  
+
+/* Hamburger Menu (Mobile) */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    text-align: right;
+    padding: 1rem;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
 }

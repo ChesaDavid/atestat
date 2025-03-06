@@ -34,7 +34,7 @@ function TodoApp() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-4 border rounded-lg shadow-lg">
+    <div className="max-w-md mx-auto mt-10 p-4 border rounded-lg shadow-lg h-screen">
       <h1 className="text-2xl font-bold mb-4 text-center">To-Do App with Firebase</h1>
       <div className="flex mb-4">
         <input

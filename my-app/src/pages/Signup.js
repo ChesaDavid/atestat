@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [user, setUser] = useState({
@@ -28,7 +29,7 @@ function Signup() {
       [name]: value
     }));
   };
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (user.password !== user.confirmPassword) {
@@ -43,6 +44,7 @@ function Signup() {
       const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
       await updateProfile(userCredential.user, { displayName: user.name });
       alert("Signup successful! You can now log in.");
+      navigate('/');
     } catch (error) {
       setUser((prevUser) => ({ ...prevUser, errorMessage: error.message }));
     }
@@ -135,7 +137,7 @@ function Signup() {
     <>
     <h1 style={styles.title}>Sign Up</h1>
     {user.errorMessage && <p>{user.errorMessage}</p>}
-    <form onSubmit={handleSubmit} style={styles.form}>
+    <form onSubmit={handleSubmit} style={styles.form} className="h-screen">
      <img src={require('../assets/logo.png')} alt="Logo" />
       <div
         style={styles.center}
