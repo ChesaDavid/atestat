@@ -15,7 +15,8 @@ import Alert from './components/Alert';
 import Todo from './pages/Todo';
 import Contabil from './pages/Contabil';
 import Favorites from './pages/Favorites';
-
+import Aboutus from './pages/Aboutus';
+import Contact from './pages/Contact';
 function App() {
   return (
       <Router>
@@ -31,6 +32,8 @@ function App() {
           <Route path='/todo' element={<Todo/>}></Route>
           <Route path='/contabil' element={<Contabil/>}></Route>
           <Route path='/fav' element={<Favorites/>}></Route>
+          <Route path='/about' element={<Aboutus/>}></Route>
+          <Route path='/contact' element={<Contact/>}></Route>
         </Routes>
         <Buttonup />
         <Footer className=""/>

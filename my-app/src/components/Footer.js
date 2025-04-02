@@ -1,24 +1,38 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <footer className="bg-gray-800 text-white py-4 rounded-t-lg bottom-0 shadow-lg w-full abslute">
-            <div className="max-w-md mx-auto text-center">
-                <p className="text-sm">© {new Date().getFullYear()} StudyIt. All rights reserved.</p>
-                <div className="flex justify-center space-x-4 mt-2">
-                    <a href="https://github.com/your-repo" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400">
-                        GitHub
-                    </a>
-                    <a href="https://yourportfolio.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400">
-                        Portfolio
-                    </a>
-                    <a href="mailto:david.chesa.it@gmail.com?subject=StudyIt%20Inquiry&body=Hello%20there!" className="hover:text-blue-400">
-                        Email Us
-                    </a>
+        <footer className="bg-gray-800 text-white py-6">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+                <div>
+                    <h2 className="text-lg font-semibold mb-2">About Us</h2>
+                    <p>We provide high-quality services to help you achieve your goals. Reach out to us for more information.</p>
                 </div>
+                <div>
+                    <h2 className="text-lg font-semibold mb-2">Quick Links</h2>
+                    <ul className="space-y-2">
+                        <li><Link to="/" className="hover:text-gray-400">Home</Link></li>
+                        <li><Link to="/resources" className="hover:text-gray-400">Resources</Link></li>
+                        <li><Link to="/about" className="hover:text-gray-400">About Us</Link></li>
+                        <li><Link to="/contact" className="hover:text-gray-400">Contact</Link></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 className="text-lg font-semibold mb-2"><Link to='/contact' className="hove:text-gray-400">Contact Us</Link></h2>
+                    <p>Email: david.chesa.it@gmail.com</p>
+                    <p>Phone: +4073240920 </p>
+                    <p>Address: Timișoara Str. Ghirlandei nr 4</p>
+                
+                </div>
+            </div>
+
+            <div className="text-center mt-6 border-t border-gray-700 pt-4">
+                <p>&copy; 2025 My Website. All rights reserved.</p>
             </div>
         </footer>
     );
 }
 
-export default Footer;
+export default Footer;

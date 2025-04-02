@@ -112,6 +112,12 @@ function Login() {
 
     return (
         <>
+        {alertStyle !== "none" && (
+                <Alert
+                    text={alertStyle === "error" ? "Incorrect password or email" : "Login Successful!"}
+                    type={alertStyle}
+                />
+            )}
             <div style={styles.displayCenter} className="h-screen">
                 <form style={styles.form} onSubmit={handleSubmit}>
                     <img src={require("../assets/logo.png")} alt="Logo" />
@@ -152,13 +158,7 @@ function Login() {
                 </form>
             </div>
 
-            {/* Conditional Alert Display */}
-            {alertStyle !== "none" && (
-                <Alert
-                    text={alertStyle === "error" ? "Incorrect password or email" : "Login Successful!"}
-                    type={alertStyle}
-                />
-            )}
+            
         </>
     );
 }

@@ -15,12 +15,13 @@ function Home() {
     };
     console.log(displayName);
     return (
-        <>
+        <> 
+
             <header style={styles.header}>
                 <h1 style={styles.title}>Welcome to StudyIt!</h1>
                 <p style={styles.subtitle}>Where everyone can become a master at anything.</p>
             </header>
-            <main style={styles.main} className="h-screen">
+            <main style={styles.main} className="min-h-screen">
                 {/* About Us */}
                 <section style={styles.section}>
                     <h2 onClick={() => handleToggle("about")}

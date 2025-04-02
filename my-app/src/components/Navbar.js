@@ -55,7 +55,7 @@ function Navbar() {
     };
 
     return (
-        <nav className="relative bg-gray-800 p-4 flex justify-between items-center text-white">
+        <nav className="relative bg-gray-800 z-12 p-4 flex justify-between items-center text-white">
             <div style={styles.logoundname}>
                 <img src={Logo} alt="Logo" id="logo-navbar" className="h-10" />
                 {user && <p style={styles.displayNameStyle}>{user.displayName || "User"}</p>}

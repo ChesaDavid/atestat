@@ -1,7 +1,7 @@
 export default function (){
     return (
         <>
-            <div className="h-screen">
+            <div className="min-h-screen felx justify-center">
                 Favorites
             </div>
         </>

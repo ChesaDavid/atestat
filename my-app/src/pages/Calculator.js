@@ -93,7 +93,7 @@ function Calculator() {
     }
     return (
         <>
-        <body>
+        <body className="h-screen">
         <div style={styles.calc} 
             onKeyDown={handleKeyboardEvent}>
             <div style={styles.screen}>{screen}</div>

@@ -135,6 +135,7 @@ function Signup() {
 
   return (
     <>
+    <main className=" min-h-screen z-12">
     <h1 style={styles.title}>Sign Up</h1>
     {user.errorMessage && <p>{user.errorMessage}</p>}
     <form onSubmit={handleSubmit} style={styles.form} className="h-screen">
@@ -189,6 +190,7 @@ function Signup() {
       </div>
       
     </form>
+    </main>
   </>
   );
 }
