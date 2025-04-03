@@ -1,17 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
+import { db, auth } from "../firebase";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 function Course() {
     const selectedCourse = JSON.parse(localStorage.getItem("selectedCourse")) || {};
     const playerRef = useRef(null);
     const [isPlayerReady, setIsPlayerReady] = useState(false);
+    const [userId, setUserId] = useState(null);
+    const courseId = selectedCourse.id || new Date().getTime().toString(); 
 
-    // Extract YouTube Video ID
     function getYouTubeVideoId(url) {
         const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|embed\/|v\/|.*[?&]v=))([^&?]+)/);
         return match ? match[1] : null;
     }
 
-    // Load YouTube API once
+    useEffect(() => {
+        const user = auth.currentUser;
+        if (user) {
+            setUserId(user.uid);
+        }
+    }, []);
+
     useEffect(() => {
         if (!window.YT) {
             const script = document.createElement("script");
@@ -28,12 +37,10 @@ function Course() {
         }
     }, [selectedCourse.video]);
 
-    // Initialize YouTube Player
     const createPlayer = () => {
         const videoId = getYouTubeVideoId(selectedCourse.video);
         if (!videoId) return;
 
-        // Create player when API is ready
         window.onYouTubeIframeAPIReady = () => {
             playerRef.current = new window.YT.Player("youtube-player", {
                 videoId,
@@ -48,7 +55,6 @@ function Course() {
             });
         };
 
-        // In case the API is already loaded
         if (window.YT && window.YT.Player) {
             playerRef.current = new window.YT.Player("youtube-player", {
                 videoId,
@@ -64,14 +70,40 @@ function Course() {
         }
     };
 
-    function addToFav() {
-        console.log("Added to Favorites!");
-        // Logic to store in Firebase or localStorage
+    async function addToFav() {
+        if (!userId) {
+            console.error("User not authenticated");
+            return;
+        }
+
+        const courseRef = doc(db, "users", userId, "favorites", "items"); 
+
+        try {
+            const docSnap = await getDoc(courseRef);
+            let existingFavorites = docSnap.exists() ? docSnap.data() : {};
+
+            if (!existingFavorites[courseId]) {
+                existingFavorites[courseId] = {
+                    title: selectedCourse.title,
+                    description: selectedCourse.description,
+                    logo: selectedCourse.logo,
+                    video: selectedCourse.video,
+                    courseId: selectedCourse.id,
+                };
+
+                await setDoc(courseRef, existingFavorites);
+                console.log("Course added to favorites!");
+            } else {
+                console.log("Course already in favorites.");
+            }
+        } catch (error) {
+            console.error("Error adding to favorites:", error);
+        }
     }
 
     return (
-        <div className="h-screen flex justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-            <div className="flex flex-col justify-center items-center mt-10 p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl shadow-lg">
+        <div className="h-screen flex justify-center items-center ">
+            <div className="flex flex-col justify-center items-center mt-10 p-6 bg-gray-900 rounded-xl shadow-lg">
                 <h1 className="text-4xl font-extrabold text-white mb-4">
                     {selectedCourse.title || "No Title"}
                 </h1>
@@ -84,7 +116,6 @@ function Course() {
                     {selectedCourse.description || "No description available."}
                 </p>
 
-                {/* Video Player */}
                 <div className="mt-4">
                     {selectedCourse.video ? (
                         <div id="youtube-player" className="rounded-lg shadow-lg w-[400px] h-[225px] relative">
@@ -100,7 +131,6 @@ function Course() {
                     )}
                 </div>
 
-                {/* Add to Favorites Button */}
                 <div className="flex space-x-7 mt-6">
                     <button
                         onClick={addToFav}

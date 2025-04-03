@@ -13,8 +13,8 @@ function Login() {
     });
     console.log(displayName);
     const [isHovered, setIsHovered] = useState(false);
-    const [alertStyle, setAlertStyle] = useState("none"); // State to manage alert type
-
+    const [alertStyle, setAlertStyle] = useState("none");  
+    
     const handleHover = () => {
         setIsHovered(!isHovered);
     };
@@ -41,6 +41,9 @@ function Login() {
         } catch (error) {
             setAlertStyle("error");
             resetInputs();
+            setTimeout(()=>{
+                setAlertStyle("none");
+              }, 2000);
             setUser((prevUser) => ({ ...prevUser, errorMessage: error.message }));
         }
     };

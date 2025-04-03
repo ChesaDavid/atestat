@@ -6,9 +6,9 @@ import {
   doc, 
   updateDoc, 
   onSnapshot 
-} from "../firebase";
+} from "firebase/firestore";
 import { db, auth } from "../firebase";
-import { onAuthStateChanged, signOut } from "../firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 function TodoApp() {
@@ -18,9 +18,8 @@ function TodoApp() {
   const addField = useRef();
   const navigate = useNavigate();
 
-  // Handle authentication state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
         fetchTasks(currentUser.uid);
@@ -31,29 +30,24 @@ function TodoApp() {
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => unsubscribeAuth();
   }, [navigate]);
 
-  // Fetch tasks with real-time updates
   const fetchTasks = (userId) => {
     const tasksRef = collection(db, "users", userId, "tasks");
-    const unsubscribe = onSnapshot(tasksRef, (querySnapshot) => {
-      const tasksList = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setTasks(tasksList);
+    const unsubscribeTasks = onSnapshot(tasksRef, (snapshot) => {
+      setTasks(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
 
-    return unsubscribe;
+    return () => unsubscribeTasks();
   };
 
   const addTask = async () => {
-    const task = addField.current.value.trim();
-    if (task && user) {
+    const taskText = addField.current.value.trim();
+    if (taskText && user) {
       try {
         await addDoc(collection(db, "users", user.uid, "tasks"), {
-          text: task,
+          text: taskText,
           createdAt: new Date().toISOString(),
           completed: false
         });
@@ -110,7 +104,7 @@ function TodoApp() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-4 border rounded-lg shadow-lg bg-gray-900">
+    <div className="max-w-md min-h-screen mx-auto mt-10 p-4 border rounded-lg shadow-lg bg-gray-900">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold text-white">To-Do App</h1>
         <button
@@ -120,7 +114,7 @@ function TodoApp() {
           Logout
         </button>
       </div>
-      
+
       <div className="flex mb-4">
         <input
           type="text"
@@ -136,7 +130,7 @@ function TodoApp() {
           Add
         </button>
       </div>
-      
+
       <ul className="space-y-2">
         {tasks.length === 0 ? (
           <li className="text-gray-400 text-center py-4">No tasks yet. Add one above!</li>
@@ -144,7 +138,9 @@ function TodoApp() {
           tasks.map((task) => (
             <li
               key={task.id}
-              className={`flex justify-between items-center p-3 rounded-lg ${task.completed ? 'bg-gray-700' : 'bg-gray-800'}`}
+              className={`flex justify-between items-center p-3 rounded-lg ${
+                task.completed ? "bg-gray-700" : "bg-gray-800"
+              }`}
             >
               <div className="flex items-center">
                 <input
@@ -153,7 +149,7 @@ function TodoApp() {
                   onChange={() => toggleTaskCompletion(task)}
                   className="mr-3 h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span className={`${task.completed ? 'line-through text-gray-400' : 'text-white'}`}>
+                <span className={`${task.completed ? "line-through text-gray-400" : "text-white"}`}>
                   {task.text}
                 </span>
               </div>

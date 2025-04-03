@@ -22,7 +22,6 @@ function Home() {
                 <p style={styles.subtitle}>Where everyone can become a master at anything.</p>
             </header>
             <main style={styles.main} className="min-h-screen">
-                {/* About Us */}
                 <section style={styles.section}>
                     <h2 onClick={() => handleToggle("about")}
                         style={visibleSection === "about" || hoverSection === "about" ? styles.hover : styles.clickable}
@@ -42,7 +41,6 @@ function Home() {
                         Or something else that may pique your interest.
                     </p>
                 </section>
-                {/* Our Services */}
                 <section style={styles.section}>
                     <h2 onClick={() => handleToggle("services")}
                         style={visibleSection === "services" || hoverSection === "services" ? styles.hover : styles.clickable}
@@ -57,7 +55,6 @@ function Home() {
                         You can even try our <a href="#!">mobile app</a>.
                     </p>
                 </section>
-                {/* Contact Us */}
                 <section style={styles.section}>
                     <h2  onClick={() => handleToggle("contact")}
                         style={visibleSection === "contact" || hoverSection === "contact" ? styles.hover : styles.clickable}
@@ -71,7 +68,6 @@ function Home() {
                         <p>Phone: 0732409201</p>
                     </p>
                 </section>
-                {/* Free services */}
                 <section >
                     <h2 onClick={() => handleToggle("freeServices")}
                         style={visibleSection === "freeServices" || hoverSection === "freeServices" ? styles.hover : styles.clickable}

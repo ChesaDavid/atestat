@@ -17,6 +17,7 @@ import Contabil from './pages/Contabil';
 import Favorites from './pages/Favorites';
 import Aboutus from './pages/Aboutus';
 import Contact from './pages/Contact';
+import Error from './pages/404';
 function App() {
   return (
       <Router>
@@ -34,6 +35,7 @@ function App() {
           <Route path='/fav' element={<Favorites/>}></Route>
           <Route path='/about' element={<Aboutus/>}></Route>
           <Route path='/contact' element={<Contact/>}></Route>
+          <Route path='*' element={<Error/>}></Route>
         </Routes>
         <Buttonup />
         <Footer className=""/>
