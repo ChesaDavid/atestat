@@ -1,96 +1,13 @@
-import React, { useState,useEffect } from 'react';
-
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { displayName } from "../firebase";
-import { video } from 'framer-motion/client';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import materials from './Videos';
-
-
 
 function Resources() {
     const [clickedSection, setClickedSection] = useState(""); 
     const [hoverSection, setHoverSection] = useState(""); 
     const [videoDurations, setVideoDurations] = useState({});
-    const styles = {
-        info: {
-            padding: '10px',
-            backgroundColor: '#f5f5f5',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            marginBottom: '10px',
-            width: '80%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '182px',
-        },
-        infoTwo: {
-            padding: '10px',
-            backgroundColor: '#f5f5f5',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            marginBottom: '10px',
-            width: '80%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-        infoTitle: {
-            fontSize: '20px',
-            fontWeight: 'bold',
-            marginBottom: '10px',
-            padding: '10px',
-            backgroundColor: 'white',
-            borderRadius: '5px',
-            color: '#333',
-            border: 'none',
-            width: '100%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '0px',
-            textAlign: 'center',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease-in-out',
-        },
-        materialsContainer: {
-            display: 'flex',
-            overflowX: 'auto',
-            padding: '10px',
-            gap: '10px',
-            scrollBehavior: 'smooth',
-        },
-        materialCard: {
-            flex: '0 0 auto',
-            width: '300px',
-            padding: '10px',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            textAlign: 'center',
-            backgroundColor: '#fff',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            alignItems: 'center',
-
-        },
-        arrowButton: {
-            backgroundColor: 'white',
-            border: 'solid 1px black',
-            padding:'3px',
-            fontSize: '20px',
-            cursor: 'pointer',
-            color: '#333',
-            borderRadius: '50%',
-            textAlign:'center'
-        },
-        logo : {
-            width: "290px",
-            height: "160px"
-        } ,
-        hoverEffect: { border: '2px solid blue' },
-        clickedEffect: { backgroundColor: "rgb(1, 1, 51)"},
-    };
-
     const navigate = useNavigate();
-    function goToCourse(){
-        navigate('/course');
-    }
+
     const subjects = [
         { title: "Computer Science", id: "computer_science" },
         { title: "Mathematics", id: "mathematics" },
@@ -102,10 +19,7 @@ function Resources() {
         { title: "Geography", id: "geography" },
         { title: "History", id: "history" },
         { title: "Economics", id: "economics" },
-
     ];
-
-    
 
     const scrollContainer = (id, direction) => {
         const container = document.getElementById(id);
@@ -116,16 +30,7 @@ function Resources() {
             });
         }
     };
-    function Show(index,matIndex){
-        console.log(JSON.stringify('selectedCourse'))
-       
-    }
-    function navigateTo(url){
-        window.location.replace(url);
-    }
-    function setHover(subject){
-        setHoverSection(subject);
-    }
+
     useEffect(() => {
         materials.forEach((subject, subjIndex) => {
             subject.forEach((material, matIndex) => {
@@ -155,65 +60,67 @@ function Resources() {
     };
     
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-gray-900 p-6">
             {subjects.map((subject, index) => (
                 <div
                     key={index}
-                    style={{
-                        ...(subject.id === "computer_science" ? styles.info : styles.infoTwo),
-                        ...(hoverSection === subject.id && styles.hoverEffect),
-                        ...(clickedSection === subject.id && styles.clickedEffect)
-                      }}
-                      id={subject.id}
-                      onMouseEnter={() => setHoverSection(subject.id)}
-                      onMouseLeave={() => setHoverSection('')}
-                      onClick={() => setClickedSection(subject.id)}
+                    className={`mb-6 mx-auto w-[90%] max-w-6xl rounded-lg bg-gray-500 p-6 shadow-md transition-all duration-300
+                        ${subject.id === "computer_science" ? "mt-44" : "mt-4"}
+                        ${hoverSection === subject.id ? "border-2 border-blue-500" : "border border-gray-200"}
+                        ${clickedSection === subject.id ? "bg-slate-900 text-white" : ""}`}
+                    id={subject.id}
+                    onMouseEnter={() => setHoverSection(subject.id)}
+                    onMouseLeave={() => setHoverSection('')}
+                    onClick={() => setClickedSection(subject.id)}
                 >
-                    <p style={styles.infoTitle}>{subject.title}</p>
+                    <h2 className="mb-4 cursor-pointer text-center text-xl font-bold transition-colors hover:text-blue-600">
+                        {subject.title}
+                    </h2>
+                    
                     {materials[index] && materials[index].length > 0 && clickedSection === subject.id && (
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div className="flex items-center gap-4">
                             <button
-                                style={styles.arrowButton}
-                                onClick={() => scrollContainer(`materials-${index}`, 'left')}
-                            >
-                                &#8592;
-                            </button>
-                            <div
-                                id={`materials-${index}`}
-                                style={styles.materialsContainer}
-                            >
-                               {materials[index].map((material, matIndex) => (
-                            <div
-                                key={matIndex}
-                                style={styles.materialCard}
-                                onClick={() => {
-                                    localStorage.setItem('selectedCourse', JSON.stringify(materials[index][matIndex]));
-                                    navigate('/course');
+                                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white text-xl text-gray-600 shadow-sm transition-all hover:bg-gray-50 hover:shadow-md"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    scrollContainer(`materials-${index}`, 'left');
                                 }}
                             >
-                                <img
-                                    src={material.logo}
-                                    alt={material.title}
-                                    style={styles.logo}
-                                />
-                                <p>{material.title}</p>
-                                <span className="text-sm text-gray-500">
-                                {material.video && (
-                                        <p>{videoDurations[`${index}-${matIndex}`] || 'Loading...'}</p>
-                                    )}
-                                {!material.video && (
-                                    <p>Video does not exist</p>
-                                )}
-                                </span>
-                            </div>
-                        ))}
+                                ←
+                            </button>
 
-                            </div>
-                            <button
-                                style={styles.arrowButton}
-                                onClick={() => scrollContainer(`materials-${index}`, 'right')}
+                            <div
+                                id={`materials-${index}`}
+                                className="flex gap-6 overflow-x-auto  scroll-smooth py-4 px-2"
                             >
-                                &#8594;
+                                {materials[index].map((material, matIndex) => (
+                                    <div
+                                        key={matIndex}
+                                        className="flex min-w-[300px] flex-col items-center rounded-lg bg-gray-900 p-4 shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
+                                        onClick={() => {
+                                            localStorage.setItem('selectedCourse', JSON.stringify(material));
+                                            navigate('/course');
+                                        }}
+                                    >
+                                        <img
+                                            src={material.logo}
+                                            alt={material.title}
+                                            className="h-40 w-full rounded-lg object-cover"
+                                        />
+                                        <h3 className="mt-3 text-lg font-semibold">{material.title}</h3>
+                                        
+                                    </div>
+                                ))}
+                            </div>
+
+                            <button
+                                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white text-xl text-gray-600 shadow-sm transition-all hover:bg-gray-50 hover:shadow-md"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    scrollContainer(`materials-${index}`, 'right');
+                                }}
+                            >
+                                →
                             </button>
                         </div>
                     )}

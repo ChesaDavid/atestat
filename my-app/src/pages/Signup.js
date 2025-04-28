@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { auth } from "../firebase";
+import { auth, signInWithGoogle } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from 'react-icons/fc';
+import { HiMail, HiUser } from 'react-icons/hi';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 function Signup() {
   const [user, setUser] = useState({
@@ -10,188 +12,176 @@ function Signup() {
     email: "",
     password: "",
     confirmPassword: "",
-    errorMessage: ""
   });
-  const [isHovered, setIsHovered] = useState("");
-
-  function validatePassword(password) {
-    return password.length >= 8 && /[a-z]/.test(password) && /[A-Z]/.test(password) && /[0-9]/.test(password) && /[!@#$%^&*()]/.test(password);
-  }
-
-  const handleHover = (section) => {
-    setIsHovered(isHovered === section ? "" : section);
-  };
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value
-    }));
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const navigate = useNavigate();
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
     if (user.password !== user.confirmPassword) {
-      setUser((prevUser) => ({ ...prevUser, errorMessage: "Passwords do not match!" }));
+      setError("Passwords do not match");
+      setIsLoading(false);
       return;
     }
-    if (!validatePassword(user.password)) {
-      setUser((prevUser) => ({ ...prevUser, errorMessage: "Password does not meet security requirements!" }));
-      return;
-    }
+
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
       await updateProfile(userCredential.user, { displayName: user.name });
-      alert("Signup successful! You can now log in.");
       navigate('/');
     } catch (error) {
-      setUser((prevUser) => ({ ...prevUser, errorMessage: error.message }));
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const styles = {
-    inputStyle: {
-      marginBottom: "10px"
-    },
-    buttonStyle: {
-      backgroundColor: "lightblue",
-      color: "black",
-      padding: "10px 20px",
-      borderRadius: "5px",
-      cursor: "pointer",
-      width: "290px",
-      marginTop: "10px",
-      borderRadius: "25px"
-    },
-    form: {
-      display: 'flex',
-      margin: '50px auto',
-      padding: '20px',
-      width: '800px',
-      background: '#fff',
-      borderRadius: '10px',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      alignItems: 'center',
-      flexDirection: 'row',
-      marginTop:"10%",
-      backgroundColor:"white",
-
-      
-    },
-    label: {
-      display: "block",
-      marginBottom: "10px",
-      color: "#333"
-    },
-    inputStyle: {
-      width: "100%",
-      padding: "10px",
-      border: "1px solid #ccc",
-      borderRadius: "5px",
-      marginBottom: "20px"
-    },
-    submit: {
-      width: "100%",
-      padding: "10px 20px",
-      backgroundColor: "#007bff",
-      color: "#fff",
-      border: "none",
-      borderRadius: "5px",
-      cursor: "pointer"
-    },
-    buttonStyleHover: {
-      backgroundColor: "darkblue",
-      color: "white",
-      padding: "10px 20px",
-      borderRadius: "5px",
-      cursor: "pointer",
-      width: "290px",
-      marginTop: "10px",
-      borderRadius: "25px"
-    },
-    center:{
-      alignItems:"center",
-      backgroundColor:"white",
-      padding:"10px",
-      borderRadius:"0% 6% 6% 0%"
-    },
-    error: {
-      color: "red",
-      fontSize: "14px",
-      marginBottom: "10px",
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithGoogle();
+      navigate('/');
+    } catch (error) {
+      setError("Could not sign in with Google");
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleRestart = (e) => {
-    setUser({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      errorMessage: ""
-    });
   };
 
   return (
-    <>
-    <main className=" min-h-screen z-12">
-    <h1 style={styles.title}>Sign Up</h1>
-    {user.errorMessage && <p>{user.errorMessage}</p>}
-    <form onSubmit={handleSubmit} style={styles.form} className="h-screen">
-     <img src={require('../assets/logo.png')} alt="Logo" />
-      <div
-        style={styles.center}
-      >
-         {user.errorMessage && <p style={styles.error}>{user.errorMessage}</p>}
-          <label style={styles.label}>
-            <input
-            style={styles.inputStyle}
-              type="text" name="name" placeholder="Full Name" value={user.name} onChange={handleChange} required 
-            />
-          </label>
-          <label style={styles.label}>
-            <input
-              style={styles.inputStyle}
-              type="email" name="email" placeholder="Email" value={user.email} onChange={handleChange} required
-            />
-          </label>
-          <label style={styles.label}>
-            <input
-              style={styles.inputStyle}
-              type="password" name="password" placeholder="Password" value={user.password} onChange={handleChange} required
-            />
-          </label>
-          <label style={styles.label}>
-            <input
-              style={styles.inputStyle}
-              type="password" name="confirmPassword" placeholder="Confirm Password" value={user.confirmPassword} onChange={handleChange} required
-            />
-            {/* Uncomment and adjust validation check */}
-            {validatePassword(user.password) && <p>Password is valid</p>}
-          </label>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-gray-800/50 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-gray-700">
+        <div className="space-y-4">
+          <h2 className="mt-6 text-center text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+            Create Account
+          </h2>
+          <p className="text-center text-sm text-gray-400">
+            Join us to start learning today
+          </p>
+        </div>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg relative" role="alert">
+            <span className="block sm:inline">{error}</span>
+          </div>
+        )}
+
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div className="relative">
+              <HiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                name="name"
+                type="text"
+                required
+                className="pl-10 w-full px-4 py-3 bg-gray-700/50 border border-gray-600 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                placeholder="Full name"
+                value={user.name}
+                onChange={handleChange}
+              />
+            </div>
+            
+            <div className="relative">
+              <HiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                name="email"
+                type="email"
+                required
+                className="pl-10 w-full px-4 py-3 bg-gray-700/50 border border-gray-600 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                placeholder="Email address"
+                value={user.email}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="relative">
+              <RiLockPasswordLine className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                name="password"
+                type="password"
+                required
+                className="pl-10 w-full px-4 py-3 bg-gray-700/50 border border-gray-600 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                placeholder="Password"
+                value={user.password}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="relative">
+              <RiLockPasswordLine className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                name="confirmPassword"
+                type="password"
+                required
+                className="pl-10 w-full px-4 py-3 bg-gray-700/50 border border-gray-600 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                placeholder="Confirm password"
+                value={user.confirmPassword}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white 
+              bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 
+              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
+              transform transition duration-200 hover:scale-[1.02]
+              ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {isLoading ? 'Creating account...' : 'Sign up'}
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-600/50"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-gray-800/50 text-gray-400">Or continue with</span>
+            </div>
+          </div>
+
           <button
-            type="submit"
-            style={isHovered === "submit" ? styles.buttonStyleHover : styles.buttonStyle}
-            onMouseEnter={() => handleHover("submit")}
-            onMouseLeave={() => handleHover("")}
+            onClick={handleGoogleSignIn}
+            disabled={isLoading}
+            className="mt-4 w-full flex justify-center items-center gap-3 py-3 px-4 
+            border border-gray-600 rounded-lg shadow-sm bg-gray-700/50 
+            text-sm font-medium text-gray-200 
+            hover:bg-gray-600/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+            transform transition duration-200 hover:scale-[1.02]"
           >
-            Sign Up
+            <FcGoogle className="h-5 w-5" />
+            Sign up with Google
           </button>
+        </div>
+
+        <div className="text-center mt-6">
+          <span className="text-gray-400">Already have an account? </span>
           <button
-            type="reset"
-            style={isHovered === "reset" ? styles.buttonStyleHover : styles.buttonStyle}
-            onMouseEnter={() => handleHover("reset")}
-            onMouseLeave={() => handleHover("")}
-            onClick={() => handleRestart()}
+            onClick={() => navigate('/login')}
+            className="font-medium text-blue-400 hover:text-blue-300 transition duration-200"
           >
-            Reset
+            Sign in
           </button>
+        </div>
       </div>
-      
-    </form>
-    </main>
-  </>
+    </div>
   );
 }
 

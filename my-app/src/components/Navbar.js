@@ -8,117 +8,248 @@ import Logo from "../assets/logo.png";
 import SlideTabs from "./Slidetab";
 
 function Navbar() {
-    const [user, setUser] = useState(null);
-    const [isHover, setIsHover] = useState(false);
-    const [isSlideOpen, setIsSlideOpen] = useState(false); // Toggle for SlideTabs
+  const [user, setUser] = useState(null);
+  const [isHover, setIsHover] = useState(false);
+  const [isSlideOpen, setIsSlideOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-        });
-        return () => unsubscribe();
-    }, []);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            setUser(null);
-        } catch (error) {
-            console.error("Logout failed", error);
-        }
-    };
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
-    const styles = {
-        searchBar: {
-            width: "400px",
-            marginLeft: "30px",
-            borderRadius: "25px",
-            padding: "5px",
-            backgroundColor: "white",
-            boxShadow: "1px 1px 5px rgba(0,0,0,0.2)",
-            transition: "all 0.3s ease-in-out",
-        },
-        logoundname: {
-            color: "white",
-            display: "flex",
-            gap: "10px",
-            alignItems: "center",
-        },
-        displayNameStyle: {
-            fontSize: "20px",
-            fontWeight: "bold",
-        },
-        logOutHover: {
-            backgroundColor: "red",
-            transition: "background-color 0.3s ease-in-out",
-        },
-    };
+  return (
+    <nav className="fixed  stop-0 left-0 right-0 z-50 bg-gray-800 px-4 py-4 shadow-lg md:px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between">
+        <div className="flex items-center gap-4">
+          <img
+            src={Logo}
+            alt="Logo"
+            className="h-8 w-auto transition-transform hover:scale-105 md:h-10"
+          />
+          {user && (
+            <p className="hidden text-lg font-bold text-white md:block md:text-xl">
+              {user.displayName || user.email || "User"}
+            </p>
+          )}
+        </div>
 
-    return (
-        <nav className="relative bg-gray-800 z-12 p-4 flex justify-between items-center text-white">
-            <div style={styles.logoundname}>
-                <img src={Logo} alt="Logo" id="logo-navbar" className="h-10" />
-                {user && <p style={styles.displayNameStyle}>{user.displayName || "User"}</p>}
-            </div>
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="text-white focus:outline-none md:hidden"
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            {isMobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
 
-            <input
-                type="text"
-                id="search"
-                style={styles.searchBar}
-                placeholder="Search..."
-            />
+        <ul className="hidden items-center gap-6 md:flex">
+          <li>
+            <Link
+              to="/"
+              className="text-white transition-colors hover:text-blue-400"
+            >
+              Home
+            </Link>
+          </li>
+          {user && (
+            <li>
+              <Link
+                to="/fav"
+                className="text-white transition-colors hover:text-blue-400"
+              >
+                Favorites
+              </Link>
+            </li>
+          )}
+          <li>
+            <Link
+              to="/resources"
+              className="text-white transition-colors hover:text-blue-400"
+            >
+              Resources
+            </Link>
+          </li>
+          <li>
+            <button
+              onClick={() => setIsSlideOpen((prev) => !prev)}
+              className="rounded-lg bg-blue-500 px-4 py-2 font-medium text-white 
+                                     transition-all duration-300 hover:bg-blue-600 hover:shadow-lg"
+            >
+              Services
+            </button>
+          </li>
+          {user ? (
+            <li>
+              <button
+                onClick={handleLogout}
+                className={`rounded-lg px-4 py-2 font-medium transition-colors duration-300
+                                         ${
+                                           isHover
+                                             ? "bg-red-600 text-white"
+                                             : "bg-transparent text-white hover:text-red-400"
+                                         }`}
+                onMouseOver={() => setIsHover(true)}
+                onMouseOut={() => setIsHover(false)}
+              >
+                Logout
+              </button>
+            </li>
+          ) : (
+            <>
+              <li>
+                <Link
+                  to="/login"
+                  className="rounded-lg bg-blue-500 px-4 py-2 font-medium text-white 
+                                               transition-all duration-300 hover:bg-blue-600"
+                >
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/signup"
+                  className="rounded-lg border-2 border-blue-500 px-4 py-2 font-medium 
+                                               text-white transition-all duration-300 hover:bg-blue-500"
+                >
+                  Sign Up
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
 
-            <ul className="flex gap-4 items-center">
-                <li><Link to="/">Home</Link></li>
-                {user && <li><Link to="/fav">Favorites</Link></li>}
-                <li><Link to="/resources">Resources</Link></li>
-
-                {/* Toggle SlideTabs */}
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden"
+          >
+            <ul className="mt-4 flex flex-col gap-4 border-t border-gray-700 pt-4">
+              <li>
+                <Link
+                  to="/"
+                  className="block text-white transition-colors hover:text-blue-400"
+                >
+                  Home
+                </Link>
+              </li>
+              {user && (
                 <li>
-                    <button
-                        onClick={() => setIsSlideOpen((prev) => !prev)}
-                        className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
-                    >
-                        Services
-                    </button>
+                  <Link
+                    to="/fav"
+                    className="block text-white transition-colors hover:text-blue-400"
+                  >
+                    Favorites
+                  </Link>
                 </li>
-
-                {user ? (
-                    <li
-                        id="LogOutButton"
-                        onMouseOver={() => setIsHover(true)}
-                        onMouseOut={() => setIsHover(false)}
-                        style={isHover ? styles.logOutHover : {}}
-                        onClick={handleLogout}
+              )}
+              <li>
+                <Link
+                  to="/resources"
+                  className="block text-white transition-colors hover:text-blue-400"
+                >
+                  Resources
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={() => setIsSlideOpen((prev) => !prev)}
+                  className="w-full rounded-lg bg-blue-500 px-4 py-2 font-medium text-white 
+                                             transition-all duration-300 hover:bg-blue-600"
+                >
+                  Services
+                </button>
+              </li>
+              {user ? (
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full rounded-lg bg-transparent px-4 py-2 font-medium text-white 
+                                                 transition-colors duration-300 hover:bg-red-600"
+                  >
+                    Logout
+                  </button>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      to="/login"
+                      className="block w-full rounded-lg bg-blue-500 px-4 py-2 text-center 
+                                                       font-medium text-white transition-all duration-300 hover:bg-blue-600"
                     >
-                        <span style={{ padding: "10px", display: "block", cursor: "pointer", color: "white", fontWeight: "bold", borderRadius: "5%" }}>
-                            LogOut
-                        </span>
-                    </li>
-                ) : (
-                    <>
-                        <li><Link to="/login">LogIn</Link></li>
-                        <li><Link to="/signup">SignUp</Link></li>
-                    </>
-                )}
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/signup"
+                      className="block w-full rounded-lg border-2 border-blue-500 px-4 py-2 
+                                                       text-center font-medium text-white transition-all duration-300 hover:bg-blue-500"
+                    >
+                      Sign Up
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            {/* SlideTabs Dropdown */}
-            <AnimatePresence>
-                {isSlideOpen && (
-                    <motion.div
-                        initial={{ y: -200, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: -200, opacity: 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="absolute top-16 right-4 bg-white text-black rounded-lg shadow-lg z-10"
-                    >
-                        <SlideTabs />
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
-    );
+      <AnimatePresence>
+        {isSlideOpen && (
+          <motion.div
+            initial={{ y: -200, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -200, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="absolute right-4 top-16 rounded-lg bg-white shadow-xl"
+          >
+            <SlideTabs
+              isSlideOpen={isSlideOpen}
+              onClose={() => setIsSlideOpen(false)} // Add this prop
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
 }
 
 export default Navbar;

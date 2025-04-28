@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { IoCloseOutline } from 'react-icons/io5';
 
 const tabs = [
   { id: 'tab1', title: 'ToDo', content: 'Do you want to see what want to accomplish' ,link:'todo'},
@@ -7,12 +8,19 @@ const tabs = [
   { id: 'tab3', title: 'Calculator', content: 'Do you want to use the calculator for calculations ' ,link:'calculator'},
 ];
 
-export default function SlideTabs() {
+export default function SlideTabs({ isSlideOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1');
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-lg">
-      {/* Tabs */}
+    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-lg relative">
+      <button
+        onClick={onClose}  // Changed from directly modifying isSlideOpen
+        className="absolute top-2 right-2 p-1 rounded-full hover:bg-red-100 transition-colors duration-200"
+        aria-label="Close menu"
+      >
+        <IoCloseOutline className="w-6 h-6 text-gray-600 hover:text-gray-800" />
+      </button>
+
       <div className="flex justify-around mb-4">
         {tabs.map((tab) => (
           <button
@@ -27,7 +35,6 @@ export default function SlideTabs() {
         ))}
       </div>
 
-      {/* Sliding Content */}
       <div className="relative h-40 overflow-hidden">
         <AnimatePresence mode="wait">
           {tabs.map(

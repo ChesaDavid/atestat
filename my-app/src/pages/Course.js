@@ -8,6 +8,8 @@ function Course() {
     const [isPlayerReady, setIsPlayerReady] = useState(false);
     const [userId, setUserId] = useState(null);
     const courseId = selectedCourse.id || new Date().getTime().toString(); 
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [playedFav, setPlayedFav] = useState(null);
 
     function getYouTubeVideoId(url) {
         const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|embed\/|v\/|.*[?&]v=))([^&?]+)/);
@@ -20,6 +22,26 @@ function Course() {
             setUserId(user.uid);
         }
     }, []);
+    useEffect(()=>{
+        async function checkIfFavorite() {
+            if(userId) {
+                const courseRef = doc(db, "users", userId, "favorites", "items"); 
+                try {
+                    const docSnap = await getDoc(courseRef);
+                    if (docSnap.exists()) {
+                        const existingFavorites = docSnap.data();
+                        setIsFavorite(!!existingFavorites[courseId]);
+                    } else {
+                        setIsFavorite(false);
+                    }
+                } catch (error) {
+                    console.error("Error checking favorites:", error);
+                }
+            }
+        }
+        checkIfFavorite();
+        console.log("is favorite", isFavorite);
+    },[userId])
 
     useEffect(() => {
         if (!window.YT) {
@@ -92,6 +114,7 @@ function Course() {
                 };
 
                 await setDoc(courseRef, existingFavorites);
+                setIsFavorite(true); // Update the state after successful addition
                 console.log("Course added to favorites!");
             } else {
                 console.log("Course already in favorites.");
@@ -134,9 +157,14 @@ function Course() {
                 <div className="flex space-x-7 mt-6">
                     <button
                         onClick={addToFav}
-                        className="px-6 py-2 bg-white text-indigo-600 font-semibold rounded-lg shadow-md hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out"
+                        disabled={isFavorite}
+                        className={`px-6 py-2 font-semibold rounded-lg shadow-md transition duration-300 ease-in-out
+                            ${isFavorite 
+                                ? 'bg-green-500 text-white cursor-not-allowed hover:bg-green-600' 
+                                : 'bg-white text-indigo-600 hover:bg-indigo-700 hover:text-white'
+                            }`}
                     >
-                        Add to Favorites
+                        {isFavorite ? 'Added to Favorites ✓' : 'Add to Favorites'}
                     </button>
                 </div>
             </div>

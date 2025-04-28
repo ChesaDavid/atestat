@@ -98,7 +98,41 @@ const materials = [
             title:"Linux",
             description:"Are you board of windows try Linux",
             video:"https://www.youtube.com/watch?v=sWbUDq4S6Y8"
+        },{
+            id:115,
+            logo:"",
+            title:"PWA",
+            description:"Progressive Web Apps",
+            video:"https://www.youtube.com/watch?v=sFsRylCQblw"
+        },
+        {
+            id:116,
+            logo:"",
+            title:"Meta's Llama",
+            video:"https://www.youtube.com/watch?v=P4M9wfJH-yI",
+            description:"Meta's Llama is a large language model developed by Meta AI. It is designed to understand and generate human-like text, making it useful for various applications such as chatbots, content generation, and more.",
+
+        },{
+            id:117,
+            logo:"",
+            video:"https://www.youtube.com/watch?v=AaCnBOqyvIM",
+            title:"ChatGPT",
+            description:"ChatGPT is a conversational AI model developed by OpenAI. It is designed to understand and generate human-like text, making it useful for various applications such as chatbots, content generation, and more.",
         }
+        ,{
+            id:118,
+            logo:"",
+            video:"https://www.youtube.com/watch?v=0p8g1v2j4aE",
+            title:"Bard",
+            description:"Bard is a conversational AI model developed by Google. It is designed to understand and generate human-like text, making it useful for various applications such as chatbots, content generation, and more.",
+        },{
+            id:119,
+            logo:"",
+            video:"https://www.youtube.com/watch?v=0p8g1v2j4aE",
+            title:"Claude",
+            description:"Claude is a conversational AI model developed by Anthropic. It is designed to understand and generate human-like text, making it useful for various applications such as chatbots, content generation, and more.",
+        }
+
     ], 
     [ // Mathematics (ID: 2xx)
         {
@@ -332,6 +366,20 @@ const materials = [
             "title": "Condensed Matter Physics",
             "description": "Study matter with strong electromagnetic interactions.",
             "video": "https://www.youtube.com/watch?v=k6UM9MARWDU" // Condensed Matter Physics by MIT OpenCourseWare
+        },
+        {
+            "id": 318,
+            "logo": "https://cdn-icons-png.flaticon.com/512/3602/3602155.png",
+            "title": "Statistical Mechanics",
+            "description": "Study of the behavior of large systems using probability theory.",
+            "video": "https://www.youtube.com/watch?v=hw19c_dU-tw"
+        },
+        {
+            "id": 319,
+            "logo": "https://cdn-icons-png.flaticon.com/512/2933/2933465.png",
+            "title": "Cosmology",
+            "description": "Study of the universe's origin, structure, and evolution.",
+            "video": "https://www.youtube.com/watch?v=P4boyXQuUIw"
         }
     ],
     [ // Chemistry (ID: 4xx)
@@ -341,6 +389,20 @@ const materials = [
             title: "Organic Chemistry",
             description: "Study of carbon-containing compounds and their reactions.",
             video: "https://www.youtube.com/watch?v=zFyR1JNJbwk" // Organic Chemistry by Leah4Sci
+        },
+        {
+            id: 402,
+            logo: "https://example.com/inorganic.png",
+            title: "Inorganic Chemistry",
+            description: "Study of compounds not containing carbon-carbon bonds.",
+            video: "https://www.youtube.com/watch?v=2BHJLNliXwY"
+        },
+        {
+            id: 403,
+            logo: "https://example.com/physical.png",
+            title: "Physical Chemistry",
+            description: "Study of physical principles underlying chemical phenomena.",
+            video: "https://www.youtube.com/watch?v=UL1jGtd4aeE"
         }
     ],
     [ // Biology (ID: 5xx)
@@ -364,7 +426,21 @@ const materials = [
             "title": "Human Anatomy",
             "description": "Explore the structure of the human body.",
             "video": "https://www.youtube.com/watch?v=0jDF46x52h8" // CrashCourse Anatomy
-    }
+        },
+        {
+            "id": 504,
+            "logo": "https://example.com/ecology.png",
+            "title": "Ecology",
+            "description": "Study of interactions between organisms and environment.",
+            "video": "https://www.youtube.com/watch?v=sjE-Pkjp3u4"
+        },
+        {
+            "id": 505,
+            "logo": "https://example.com/evolution.png",
+            "title": "Evolution",
+            "description": "Study of changes in organisms over generations.",
+            "video": "https://www.youtube.com/watch?v=hOfRN0KihOU"
+        }
     ],
     [ // English (ID: 6xx)
         {
@@ -387,6 +463,20 @@ const materials = [
             "title": "Modern Literature",
             "description": "20th-century works like Orwell, Hemingway, and Fitzgerald.",
             "video": "https://www.youtube.com/watch?v=9RZAY1f3l6E" // TED-Ed
+        },
+        {
+            "id": 604,
+            "logo": "https://example.com/grammar.png",
+            "title": "Advanced Grammar",
+            "description": "Master complex English grammar structures.",
+            "video": "https://www.youtube.com/watch?v=TeNbdZHW3u0"
+        },
+        {
+            "id": 605,
+            "logo": "https://example.com/writing.png",
+            "title": "Academic Writing",
+            "description": "Learn scholarly writing techniques.",
+            "video": "https://www.youtube.com/watch?v=q9YX2r30EKg"
         }
     ],
     [//Romanian
@@ -410,6 +500,20 @@ const materials = [
             "title": "Mircea Eliade",
             "description": "Romanian philosopher and historian of religions.",
             "video": "https://www.youtube.com/watch?v=WXg8P0u9W9I" // Philosophy lectures
+        },
+        {
+            "id": 704,
+            "logo": "https://example.com/romanian_grammar.png",
+            "title": "Romanian Grammar",
+            "description": "Advanced Romanian language structures.",
+            "video": "https://www.youtube.com/watch?v=example1"
+        },
+        {
+            "id": 705,
+            "logo": "https://example.com/romanian_literature.png",
+            "title": "Modern Romanian Literature",
+            "description": "Contemporary Romanian authors and works.",
+            "video": "https://www.youtube.com/watch?v=example2"
         }
     ],
     [
@@ -433,6 +537,20 @@ const materials = [
             "title": "Environmental Geography",
             "description": "Human impact on ecosystems and sustainability.",
             "video": "https://www.youtube.com/watch?v=WfGMYdalClU" // Our Changing Climate
+        },
+        {
+            "id": 804,
+            "logo": "https://example.com/climatology.png",
+            "title": "Climatology",
+            "description": "Study of climate patterns and changes.",
+            "video": "https://www.youtube.com/watch?v=example3"
+        },
+        {
+            "id": 805,
+            "logo": "https://example.com/oceanography.png",
+            "title": "Oceanography",
+            "description": "Study of oceans and marine systems.",
+            "video": "https://www.youtube.com/watch?v=example4"
         }
     ]
     ,
@@ -457,6 +575,20 @@ const materials = [
             "title": "The Cold War",
             "description": "USA vs USSR, nukes, and spies.",
             "video": "https://www.youtube.com/watch?v=dBq2xgWl5to" // Oversimplified Cold War
+        },
+        {
+            "id": 904,
+            "logo": "https://example.com/ancient_history.png",
+            "title": "Ancient Civilizations",
+            "description": "Early human societies and cultures.",
+            "video": "https://www.youtube.com/watch?v=example5"
+        },
+        {
+            "id": 905,
+            "logo": "https://example.com/medieval_history.png",
+            "title": "Medieval Europe",
+            "description": "Life in the Middle Ages.",
+            "video": "https://www.youtube.com/watch?v=example6"
         }
     ]
     ,
@@ -481,6 +613,20 @@ const materials = [
             "title": "Modern Economics",
             "description": "Cryptocurrency, globalization, and digital markets.",
             "video": "https://www.youtube.com/watch?v=1YyAzVmP9xQ" // Economics Explained
+        },
+        {
+            "id": 1004,
+            "logo": "https://example.com/finance.png",
+            "title": "Financial Markets",
+            "description": "Understanding stock markets and investments.",
+            "video": "https://www.youtube.com/watch?v=example7"
+        },
+        {
+            "id": 1005,
+            "logo": "https://example.com/international_trade.png",
+            "title": "International Trade",
+            "description": "Global commerce and trade relations.",
+            "video": "https://www.youtube.com/watch?v=example8"
         }
     ]
 ];
